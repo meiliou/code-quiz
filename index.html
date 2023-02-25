@@ -9,20 +9,22 @@
 </head>
 <body>
     <header>
-        <section>
+        <div>
             <a href="#">View Highscores</a>
             <p id="timer">Countdown: </p>
-        </section>
+        </div>
+        <section class="hide-welcome">
         <h1>Coding Quiz Challenge</h1>
         <h2>Try to answer the following code-related questions 
             within the time limit. Keep in mind that incorrect
              answer will penalise your score/time by 10 seconds!</h2>
         <button class="button" id="start-button">Start Quiz</button>
+        </section>
     </header>
 
     <main>
         <!-- Quiz Window -->
-        <section>
+        <section class="hide-questions">
             <h2>Questions go here</h2>
             <div>
                 <button>option A</button><br>
@@ -34,7 +36,7 @@
         </section>
 
         <!-- Input Window -->
-        <section>
+        <section class="hide-input">
             <h2>All done!</h2>
             <p>Your score is</p>
             <form>
@@ -45,7 +47,7 @@
         </section>
 
         <!-- High Score Window -->
-        <section>
+        <section class="hide-highscore">
             <h2>Highscores</h2>
             <p>initial - score</p>
             <button>Go Back</button>

@@ -17,11 +17,9 @@ body {
 
 header {
     padding: 20px 35px;
-    /* display: flex;
-    justify-content: center;
-    flex-wrap: wrap;   */
 }
-header section {
+
+header div {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
