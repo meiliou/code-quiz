@@ -62,5 +62,10 @@ header section h2 {
     padding: 200px;
 }
 
+.initials {
+    color: black;
+    font-size: 50px;
+}
+
 /* .answers {
 } */

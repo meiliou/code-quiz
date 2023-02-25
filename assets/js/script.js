@@ -30,11 +30,14 @@ var optionCEl = document.querySelector("#optionC");
 var optionDEl = document.querySelector("#optionD");
 var feedbackEl = document.querySelector(".feedback");
 var scoreEl = document.querySelector(".score");
+var initialsLabelEl = document.querySelector("#initialsLabel");
+var initialsBoxEL = document.querySelector("#initialsBox");
+var initialsSubmitBtnEl = document.querySelector("#initialsSubmitBtn");
 
 var timeLeft = questionBank.length * 15;
 var timeInterval;
 var q = 0;
-score = 0;
+var score = 0;
 
 
 
@@ -110,8 +113,28 @@ var gameOver = function() {
     clearInterval(timeInterval);
 }
 
+// store player initials
+var submitScore = function(event) {
+    event.preventDefault();
+    var playerInitials = initialsBox.value;
+    var newScore = {
+        player: playerInitials,
+        score: score,
+    };
+    sectionWelcomeEl.style.display='none';
+    sectionQuestionsEl.style.display='none';
+    sectionInputEl.style.display='none';
+    sectionHighscoreEl.style.display='inline';
+
+}
+
+
+
+
 // Event-Listener Game starts on click
 startButtonEl.addEventListener("click", startGame);
 // Event-Listener Compares clicked answer to actual
 answersEl.addEventListener("click", compare);
+// Event-Listener saves Score and compares to leaderboard
+initialsSubmitBtnEl.addEventListener("click", submitScore);
 
