@@ -38,6 +38,7 @@ var timeLeft = questionBank.length * 15;
 var timeInterval;
 var q = 0;
 var score = 0;
+var scoreList = [];
 
 
 
@@ -113,7 +114,20 @@ var gameOver = function() {
     clearInterval(timeInterval);
 }
 
-// store player initials
+// Get scores from local storage
+var getScore = function () {
+    var storedScore = JSON.parse(localStorage.getItem("highScore"));
+    if (storedScore!==null) {
+        scoreList = storedScore;
+    }
+}
+
+// Save scores to local storage
+var saveScore = function () {
+    localStorage.setItem("highScore", JSON.stringify(scoreList));
+}
+
+// Store player initials
 var submitScore = function(event) {
     event.preventDefault();
     var playerInitials = initialsBox.value;
@@ -121,6 +135,8 @@ var submitScore = function(event) {
         player: playerInitials,
         score: score,
     };
+    scoreList.push(newScore);
+    saveScore();
     sectionWelcomeEl.style.display='none';
     sectionQuestionsEl.style.display='none';
     sectionInputEl.style.display='none';
