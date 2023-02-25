@@ -1,29 +1,41 @@
+var sectionWelcomeEl = document.querySelector(".section-welcome");
+var sectionQuestionsEl = document.querySelector(".section-questions");
+var sectionInputEl = document.querySelector(".section-input");
+var sectionHighscoreEl = document.querySelector(".section-highscore");
+var startButtonEl = document.querySelector("#start-button");
 
-var sectionWelcome = document.querySelector(".section-welcome");
-var sectionQuestions = document.querySelector(".section-questions");
-var sectionInput = document.querySelector(".section-input");
-var sectionHighscore = document.querySelector(".section-highscore");
-var startButton = document.querySelector("#start-button");
+var countdownEl = document.querySelector("#countdown");
+
 
 // Starting view
-sectionWelcome.style.display='inline';
-sectionQuestions.style.display='none';
-sectionInput.style.display='none';
-sectionHighscore.style.display='none';
-console.dir(sectionWelcome);
-console.log(sectionWelcome);
+sectionWelcomeEl.style.display='inline';
+sectionQuestionsEl.style.display='none';
+sectionInputEl.style.display='none';
+sectionHighscoreEl.style.display='none';
 
-// Timer
+
+// Countdown
+function countdown() {
+    var timeLeft = 5;
+
+    var timeInterval = setInterval(function(){
+        if (timeLeft>=0) {
+            countdownEl.textContent = "Time left: " + timeLeft;
+            timeLeft--;
+        } else clearInterval(timeInterval);
+    }, 1000);
+};
 
 // Game starts
 var startGame = function() {
-    sectionWelcome.style.display='none';
-    sectionQuestions.style.display='inline';
-    sectionInput.style.display='none';
-    sectionHighscore.style.display='none';
+    sectionWelcomeEl.style.display='none';
+    sectionQuestionsEl.style.display='inline';
+    sectionInputEl.style.display='none';
+    sectionHighscoreEl.style.display='none';
+    countdown();
 }
 
 // Game starts on click
-startButton.addEventListener("click", startGame);
+startButtonEl.addEventListener("click", startGame);
 
 
