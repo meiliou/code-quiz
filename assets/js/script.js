@@ -127,6 +127,47 @@ var saveScore = function () {
     localStorage.setItem("highScore", JSON.stringify(scoreList));
 }
 
+// Leaderboard
+var leaderBoard = function() {
+    removeFromLeaderBoard();
+    addToLeaderBoard();
+    scoreList.sort((a, b) => {
+        return b.score - a.score;
+    });
+    
+    //only render the top 10 scores.
+    topTen = scoreList.slice(0, 10);
+  
+    for (var i = 0; i < topTen.length; i++) {
+        var player = topTen[i].player;
+        var score = topTen[i].score;
+  
+        var newDiv = document.createElement("div");
+        leaderBoardDiv.appendChild(newDiv);
+  
+        var newLabel = document.createElement("label");
+        newLabel.textContent = player + " - " + score;
+        newDiv.appendChild(newLabel);
+    }
+}
+// Adding player initials to leader board
+var addToLeaderBoard = function() {
+    leaderBoardDiv = document.createElement("div");
+    leaderBoardDiv.setAttribute("id", "playerInitials");
+    document.getElementById("leaderBoard").appendChild(leaderBoardDiv);
+  }
+  // -----------------------------------------------------------------------------
+  
+  // Removing player initials from leader board
+var removeFromLeaderBoard = function() {
+    var removeScores = document.getElementById("playerInitials");
+    if (removeScores !== null) {
+      removeScores.remove();
+    } else {
+    }
+  }
+
+
 // Store player initials
 var submitScore = function(event) {
     event.preventDefault();
