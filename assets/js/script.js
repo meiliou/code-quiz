@@ -29,7 +29,10 @@ var optionBEl = document.querySelector("#optionB");
 var optionCEl = document.querySelector("#optionC");
 var optionDEl = document.querySelector("#optionD");
 var feedbackEl = document.querySelector(".feedback");
+var scoreEl = document.querySelector(".score");
+
 var timeLeft = questionBank.length * 15;
+var timeInterval = 0;
 var q = 0;
 score = 0;
 
@@ -55,21 +58,20 @@ function countdown() {
 
 // Display Q&A
 function displayQA() {
-    // if (q < questionBank.length) {
+    if (q < questionBank.length) {
         questionsEl.textContent = questionBank[q].question;
         optionAEl.textContent = questionBank[q].options[0];
         optionBEl.textContent = questionBank[q].options[1];
         optionCEl.textContent = questionBank[q].options[2];
         optionDEl.textContent = questionBank[q].options[3];
-    // } else {
-        // "gameover placeholder"
-    // }  
+    } else {
+        gameOver();
+    }  
 }
 // Validating if answer is right or wrong
 var compareAnswer = function(event) {
     if (q >= questionBank.length) {
-        window.alert("gameOver");
-        clearInterval(timeInterval);
+        gameOver();
     } else if (event === questionBank[q].answer) {
         feedbackEl.textContent="Correct!";
     } else {
@@ -84,8 +86,6 @@ var compare = function (event) {
     var event = event.target;
     compareAnswer(event.textContent.trim());
 }
-answersEl.addEventListener("click", compare);
-
 
 // Game starts
 var startGame = function() {
@@ -96,10 +96,19 @@ var startGame = function() {
     countdown();
     displayQA();
 }
-
-
+// Game over
+var gameOver = function() {
+    sectionWelcomeEl.style.display='none';
+    sectionQuestionsEl.style.display='none';
+    sectionInputEl.style.display='inline';
+    sectionHighscoreEl.style.display='none';
+    scoreEl.textContent = "Your score is " + score;
+    countdownEl.style.display='none';
+    clearInterval(timeInterval);
+}
 
 // Event-Listener Game starts on click
 startButtonEl.addEventListener("click", startGame);
-
+// Event-Listener Compares clicked answer to actual
+answersEl.addEventListener("click", compare);
 
