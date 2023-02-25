@@ -32,7 +32,7 @@ var feedbackEl = document.querySelector(".feedback");
 var scoreEl = document.querySelector(".score");
 
 var timeLeft = questionBank.length * 15;
-var timeInterval = 0;
+var timeInterval;
 var q = 0;
 score = 0;
 
@@ -48,11 +48,14 @@ sectionHighscoreEl.style.display='none';
 
 // Countdown
 function countdown() {
-    var timeInterval = setInterval(function(){
-        if (timeLeft>=0) {
-            countdownEl.textContent = "Time left: " + timeLeft;
-            timeLeft--;
-        } else clearInterval(timeInterval);
+    timeInterval = setInterval(function(){
+        timeLeft--;
+        countdownEl.textContent = "Time left: " + timeLeft;
+
+        if (timeLeft===0 || q >= questionBank.length) {
+            clearInterval(timeInterval);
+            gameOver();
+        }
     }, 1000);
 };
 
