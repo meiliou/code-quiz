@@ -33,22 +33,24 @@ var scoreEl = document.querySelector(".score");
 var initialsLabelEl = document.querySelector("#initialsLabel");
 var initialsBoxEL = document.querySelector("#initialsBox");
 var initialsSubmitBtnEl = document.querySelector("#initialsSubmitBtn");
-
+var yourScoreAlertEl = document.querySelector("#yourScoreAlert");
+var replayBtnEl = document.querySelector("#replayBtn");
 var timeLeft = questionBank.length * 15;
+var firstPlaceEl = document.querySelector("#firstPlace");
+var secondPlaceEl = document.querySelector("#secondPlace");
+var thirdPlaceEl = document.querySelector("#thirdPlace");
+
 var timeInterval;
 var q = 0;
 var score = 0;
 var scoreList = [];
 
 
-
-
 // Starting view
-sectionWelcomeEl.style.display='inline';
-sectionQuestionsEl.style.display='none';
-sectionInputEl.style.display='none';
-sectionHighscoreEl.style.display='none';
-
+    sectionWelcomeEl.style.display='inline';
+    sectionQuestionsEl.style.display='none';
+    sectionInputEl.style.display='none';
+    sectionHighscoreEl.style.display='none';
 
 // Countdown
 function countdown() {
@@ -85,6 +87,7 @@ var compareAnswer = function(event) {
         timeLeft=timeLeft-10;
         feedbackEl.textContent="You are wrong!";
     }
+// BUG error message is coming too early
     score = timeLeft;
     q++;
     displayQA();
@@ -125,57 +128,32 @@ var getScore = function () {
 // Save scores to local storage
 var saveScore = function () {
     localStorage.setItem("highScore", JSON.stringify(scoreList));
-}
 
-// Leaderboard
-var leaderBoard = function() {
-    removeFromLeaderBoard();
-    addToLeaderBoard();
     scoreList.sort((a, b) => {
         return b.score - a.score;
-    });
-    
-    //only render the top 10 scores.
-    topTen = scoreList.slice(0, 10);
-  
+       });
+
+    var topTen = scoreList.slice(0, 2);
     for (var i = 0; i < topTen.length; i++) {
         var player = topTen[i].player;
         var score = topTen[i].score;
-  
-        var newDiv = document.createElement("div");
-        leaderBoardDiv.appendChild(newDiv);
-  
-        var newLabel = document.createElement("label");
-        newLabel.textContent = player + " - " + score;
-        newDiv.appendChild(newLabel);
+        firstPlaceEl.textContent = topTen[0].player + " - " + topTen[0].score;
+        // secondPlaceEl.textContent = topTen[1].player + " - " + topTen[1].score;
+        // thirdPlaceEl.textContent = topTen[2].player + " - " + topTen[2].score;
+        // add these when I manage to get the replay eventlistener working
     }
-}
-// Adding player initials to leader board
-var addToLeaderBoard = function() {
-    leaderBoardDiv = document.createElement("div");
-    leaderBoardDiv.setAttribute("id", "playerInitials");
-    document.getElementById("leaderBoard").appendChild(leaderBoardDiv);
-  }
-  // -----------------------------------------------------------------------------
-  
-  // Removing player initials from leader board
-var removeFromLeaderBoard = function() {
-    var removeScores = document.getElementById("playerInitials");
-    if (removeScores !== null) {
-      removeScores.remove();
-    } else {
-    }
-  }
 
+}
 
 // Store player initials
 var submitScore = function(event) {
     event.preventDefault();
-    var playerInitials = initialsBox.value;
+    var playerInitials = initialsBox.value.toUpperCase();
     var newScore = {
         player: playerInitials,
         score: score,
     };
+    yourScoreAlertEl.textContent=playerInitials + ": " + score;
     scoreList.push(newScore);
     saveScore();
     sectionWelcomeEl.style.display='none';
@@ -184,9 +162,10 @@ var submitScore = function(event) {
     sectionHighscoreEl.style.display='inline';
 
 }
-
-
-
+// // Replay game
+// var replay = function() {
+//     welcomePage()
+// }
 
 // Event-Listener Game starts on click
 startButtonEl.addEventListener("click", startGame);
@@ -194,4 +173,6 @@ startButtonEl.addEventListener("click", startGame);
 answersEl.addEventListener("click", compare);
 // Event-Listener saves Score and compares to leaderboard
 initialsSubmitBtnEl.addEventListener("click", submitScore);
-
+// Event-Listener starts another game on click
+// replayBtnEl.addEventListener("click", startGame);
+// BUG!!!
